@@ -4,6 +4,9 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Remove if fixed
+set shortmess=a
+set cmdheight=3  
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => GUI related
@@ -41,24 +44,17 @@ augroup CLNRSet
   autocmd! ColorScheme * hi CursorLineNR cterm=bold
 augroup END
 
-"colorscheme peaksea
-"
-" Colorscheme
-"set background=dark
-
-" Show Line numbers
-
-"colorscheme spacegray
-
-" hi clear CursorLine
-" augroup CLClear
-"   autocmd! ColorScheme * hi clear CursorLine
-" augroup END
-" hi CursorLineNR cterm=bold
-" augroup CLNRSet
-"   autocmd! ColorScheme * hi CursorLineNR cterm=bold
-" augroup END
-
+set showcmd
+set showmatch
+set scrolloff=5
+" Enables cursor line position tracking:
+set cursorline
+" Removes the underline causes by enabling cursorline:
+highlight clear CursorLine
+" Sets the line numbering to red background:
+highlight CursorLineNR ctermbg=Yellow
+highlight CursorColumn ctermfg=White ctermbg=Yellow cterm=bold guifg=white guibg=yellow gui=bold
+highlight CursorColumn ctermfg=Black ctermbg=Yellow cterm=bold guifg=Black guibg=yellow gui=NONE
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
@@ -72,7 +68,7 @@ augroup END
 "    means that you can undo even when you close a buffer/VIM
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 try
-  set undodir=~/.vim_runtime/temp_dirs/undodir
+  set undodir=~/.vim/undodir
   set undofile
 catch
 endtry
@@ -85,6 +81,7 @@ endtry
 cno $h e ~/
 cno $d e ~/Desktop/
 cno $j e ./
+cno $t e ~/this/
 cno $c e <C-\>eCurrentFileDir("e")<cr>
 
 " $q is super useful when browsing on the command line
@@ -100,9 +97,9 @@ cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
 " Map ½ to something useful
-map ½ $
-cmap ½ $
-imap ½ $
+"map ½ $
+"cmap ½ $
+"imap ½ $
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -120,8 +117,9 @@ inoremap $1 ()<esc>i
 inoremap $2 []<esc>i
 inoremap $3 {}<esc>i
 inoremap $4 {<esc>o}<esc>O
-inoremap $q ''<esc>i
-inoremap $e ""<esc>i
+inoremap $$ ''<esc>i
+inoremap $e ``<esc>i
+inoremap $q ""<esc>i
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -171,4 +169,3 @@ func! CurrentFileDir(cmd)
   return a:cmd . " " . expand("%:p:h") . "/"
 endfunc
 
-set undodir=~/.vim/undodir

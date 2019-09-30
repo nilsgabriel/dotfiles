@@ -23,7 +23,7 @@ au FileType python set indentkeys-=0#
 
 
 """"""""""""""""""""""""""""""
-" => JavaScript section
+" => JavaScript / CSS / HTML  section
 """""""""""""""""""""""""""""""
 "au FileType javascript call JavaScriptFold()
 "au FileType javascript setl fen
@@ -47,27 +47,17 @@ au FileType javascript inoremap <buffer> $f //--- PH<esc>FP2xi
 "endfunction
 
 
-""""""""""""""""""""""""""""""
-" => CoffeeScript section
-"""""""""""""""""""""""""""""""
-function! CoffeeScriptFold()
-    setl foldmethod=indent
-    setl foldlevelstart=1
-endfunction
-au FileType coffee call CoffeeScriptFold()
-
-au FileType gitcommit call setpos('.', [0, 1, 1, 0])
 
 
 """"""""""""""""""""""""""""""
 " => Shell section
 """"""""""""""""""""""""""""""
 if exists('$TMUX') 
-    if has('nvim')
-        set termguicolors
-    else
-        set term=screen-256color 
-    endif
+  if has('nvim')
+    set termguicolors
+  else
+    set term=screen-256color 
+  endif
 endif
 
 
