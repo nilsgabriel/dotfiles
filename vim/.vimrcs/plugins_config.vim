@@ -17,8 +17,8 @@
 """"""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
+"Plug 'othree/yajs.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'morhetz/gruvbox'
 Plug 'amix/open_file_under_cursor.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'flowtype/vim-flow'
@@ -29,15 +29,14 @@ Plug 'maximbaz/lightline-ale'
 Plug 'metakirby5/codi.vim'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'mxw/vim-jsx'
-Plug 'othree/yajs.vim'
+Plug 'prettier/vim-prettier', {
+      \ 'do': 'yarn install',
+      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
 Plug 'w0rp/ale'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
-
 call plug#end()  
 
 
@@ -48,12 +47,6 @@ au FileType html setlocal formatprg=js-beautify\ --type\ html
 au FileType scss setlocal formatprg=prettier\ --parser\ css
 au FileType css setlocal formatprg=prettier\ --parser\ css
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => colorscheme
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"colorscheme gruvbox
-"set background=dark 
 
 """"""""""""""""""""""""""""""
 " => CTRL-P
@@ -75,7 +68,6 @@ let g:ctrlp_user_command = 'cd %s;
       \ fi'
 
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -88,7 +80,6 @@ map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
 
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -97,8 +88,14 @@ let g:lightline = {}
 let g:lightline = {
       \ 'colorscheme': 'darcula',
       \ 'active': {
-      \   'left': [ ['mode', 'paste'],
-      \             ['fugitive', 'readonly', 'filename', 'modified'] ],
+      \   'left': [ ['mode', 'paste'], [
+      \       'fugitive',
+      \       'readonly',
+      \       'filename',
+      \       'fileencoding',
+      \       'modified'
+      \     ]
+      \   ],
       \   'right': [ ['lineinfo'], [
       \     'percent',
       \     'linter_checking',
@@ -135,17 +132,25 @@ let g:lightline = {
       \ }
 
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ALE 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set statusline+=%#warningmsg#
+let g:ale_linters = {
+      \  'javascript': ['eslint'],
+      \  'jsx': ['eslint']
+      \}
+
 let g:ale_fixers = {
-\   'javascript': ['prettier'],
-\   'css': ['prettier'],
-\}
+      \   'javascript': ['prettier'],
+      \   'css': ['prettier'],
+      \}
+let g:ale_sign_column_always = 1
 let g:ale_fix_on_save = 1
-nmap <Leader>py <Plug>(Prettier)
+"nmap <Leader>py <Plug>(Prettier)
+
+nmap <silent> <leader>an :ALENext<cr>
+nmap <silent> <leader>aN :ALEPrevious<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -154,19 +159,10 @@ nmap <Leader>py <Plug>(Prettier)
 let g:gitgutter_max_signs = 500
 
 "let g:gitgutter_enabled=0
-"nnoremap <silent> <leader>d :GitGutterToggle<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Git gutter (Git diff)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <silent> <leader>an :ALENext<cr>
-nmap <silent> <leader>aN :ALEPrevious<cr>
+nnoremap <silent> <leader>d :GitGutterToggle<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-javascript (Git diff)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:javascript_plugin_flow = 1
-
-
