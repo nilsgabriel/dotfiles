@@ -49,6 +49,6 @@ endif
 
 
 """"""""""""""""""""""""""""""
-" => Twig section
+" => Markdown section
 """"""""""""""""""""""""""""""
-"autocmd BufRead *.twig set syntax=html filetype=html
+au BufRead,BufNewFile *.md setlocal textwidth=80
